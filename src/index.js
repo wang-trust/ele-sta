@@ -65,7 +65,7 @@ ipcMain.on('new-indexwindow', () => {
 });
 
 ipcMain.on('close::window', () => {
-    console.log('test');
+    // console.log('test');
     // let show = dialog.showMessageBox({
     //     // properties: ['']
     //     message: 'test',
