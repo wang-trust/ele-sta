@@ -65,20 +65,21 @@ ipcMain.on('new-indexwindow', () => {
 });
 
 ipcMain.on('close::window', () => {
-    let show = dialog.showMessageBox({
-        // properties: ['']
-        message: 'test',
-        type: 'warning',
-        defaultId: 1,
-        'buttons': ['cancel','OK', 'No']
-    });
-    show.then((result) => {
-        console.log(result);
-        if(result.response === 1){
-            console.log('关闭')
-            app.quit();
-        }
-    });
+    console.log('test');
+    // let show = dialog.showMessageBox({
+    //     // properties: ['']
+    //     message: 'test',
+    //     type: 'warning',
+    //     defaultId: 1,
+    //     'buttons': ['cancel','OK', 'No']
+    // });
+    // show.then((result) => {
+    //     console.log(result);
+    //     if(result.response === 1){
+    //         console.log('关闭')
+    //         app.quit();
+    //     }
+    // });
 });
 
 
