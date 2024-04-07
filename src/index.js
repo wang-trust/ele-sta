@@ -57,7 +57,7 @@ const createWindow = () => {
 
     let menu = Menu.buildFromTemplate(menuTemp);
     // 添加到应用中
-    Menu.setApplicationMenu(menu);
+    // Menu.setApplicationMenu(menu);
 
 
 
@@ -67,16 +67,23 @@ const createWindow = () => {
     mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
     // Open the DevTools.
-    // mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
 
+    let indexMin;
     ipcMain.on('new-indexwindow', () => {
-        let indexMin = new BrowserWindow({
-            width: 300,
-            height: 300,
-            modal: true,
-            parent: mainWindow
+        indexMin = new BrowserWindow({
+            width: 600,
+            height: 600,
+            // modal: true,
+            // parent: mainWindow
+            webPreferences: {
+                preload: path.join(__dirname, 'preload.js'),
+                // nodeIntegration: true,
+                // contextIsolation: false
+            },
         });
         indexMin.loadFile('src/newindex.html');    
+        indexMin.webContents.openDevTools();
         indexMin.on('close', (e) => {
             console.log(e);
             console.log('close now');
@@ -98,13 +105,25 @@ const createWindow = () => {
         },
     ];
 
-    let rightMenu = Menu.buildFromTemplate(contextTemp);
+    // let rightMenu = Menu.buildFromTemplate(contextTemp);
 
     ipcMain.on('menu::rightclick', () => {
         rightMenu.popup(
             {window: mainWindow}
         )
     });
+
+
+    ipcMain.on('renderer::toslave', (e, data) => {
+        console.log(data);
+        indexMin.webContents.send('renderer::frommain', data);
+    });
+
+    ipcMain.on('renderer::tomain', (e, data) => {
+        console.log(data);
+        mainWindow.webContents.send('renderer::fromslave', data);
+    });
+
 };
 
 // This method will be called when Electron has finished
