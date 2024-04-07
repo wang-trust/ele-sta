@@ -89,7 +89,7 @@ const createWindow = () => {
     let contextTemp = [
         { label: 'run code'},
         { label: 'test1' },
-        { label: 'test3' },
+        { label: 'test4' },
         { 
             label: 'test2',
             click() {
