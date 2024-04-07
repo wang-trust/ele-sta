@@ -84,10 +84,12 @@ const createWindow = () => {
         })
     });
 
+
     // 自定义右键菜单
     let contextTemp = [
         { label: 'run code'},
         { label: 'test1' },
+        { label: 'test3' },
         { 
             label: 'test2',
             click() {
