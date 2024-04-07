@@ -6,3 +6,10 @@ window.addEventListener('DOMContentLoaded', () => {
         // window.electronAPI.closeWindow();
     });
 })
+
+window.addEventListener('contextmenu', (ev) => {
+    ev.preventDefault();
+    window.electronAPI.rightclick();
+
+
+}, false);

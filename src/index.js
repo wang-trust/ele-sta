@@ -47,6 +47,7 @@ const createWindow = () => {
                 },
                 {
                     label: '关于',
+                    accelerator: 'Ctrl + o',  // 绑定快捷键
                     role: 'about'
                 }
             ]
@@ -75,17 +76,32 @@ const createWindow = () => {
             modal: true,
             parent: mainWindow
         });
-        indexMin.loadFile('src/newindex.html');
-
-
-
-
-    
+        indexMin.loadFile('src/newindex.html');    
         indexMin.on('close', (e) => {
             console.log(e);
             console.log('close now');
             indexMin = null;
         })
+    });
+
+    // 自定义右键菜单
+    let contextTemp = [
+        { label: 'run code'},
+        { label: 'test1' },
+        { 
+            label: 'test2',
+            click() {
+                console.log('menu::rightclick test run ...');
+            }
+        },
+    ];
+
+    let rightMenu = Menu.buildFromTemplate(contextTemp);
+
+    ipcMain.on('menu::rightclick', () => {
+        rightMenu.popup(
+            {window: mainWindow}
+        )
     });
 };
 
