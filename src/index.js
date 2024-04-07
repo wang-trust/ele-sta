@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu } = require('electron');
 const path = require('node:path');
 const { dialog } = require('electron');
 
@@ -27,6 +27,39 @@ const createWindow = () => {
         },
     });
 
+    
+    // 自定义菜单
+    let menuTemp = [
+        { 
+            label: 'File',
+            submenu: [  // 二级菜单
+                {
+                    label: '打开文件',
+                    click() {  // 添加功能
+                        console.log('打开文件');
+                    }
+                },
+                {
+                    label: '关闭'
+                },
+                {
+                    type: 'separator'  // 分割线
+                },
+                {
+                    label: '关于',
+                    role: 'about'
+                }
+            ]
+        },
+        { label: 'Edit'}
+    ]
+
+    let menu = Menu.buildFromTemplate(menuTemp);
+    // 添加到应用中
+    Menu.setApplicationMenu(menu);
+
+
+
     // mainWindow.on('ready-to-show', () => { mainWindow.show(); })
 
     // and load the index.html of the app.
@@ -34,6 +67,26 @@ const createWindow = () => {
 
     // Open the DevTools.
     // mainWindow.webContents.openDevTools();
+
+    ipcMain.on('new-indexwindow', () => {
+        let indexMin = new BrowserWindow({
+            width: 300,
+            height: 300,
+            modal: true,
+            parent: mainWindow
+        });
+        indexMin.loadFile('src/newindex.html');
+
+
+
+
+    
+        indexMin.on('close', (e) => {
+            console.log(e);
+            console.log('close now');
+            indexMin = null;
+        })
+    });
 };
 
 // This method will be called when Electron has finished
@@ -51,18 +104,7 @@ app.whenReady().then(() => {
     });
 });
 
-ipcMain.on('new-indexwindow', () => {
-    let indexMin = new BrowserWindow({
-        width: 200,
-        height: 200
-    });
-    indexMin.loadFile('src/newindex.html');
 
-    indexMin.on('close', () => {
-        console.log('close now');
-        indexMin = null;
-    })
-});
 
 ipcMain.on('close::window', () => {
     // console.log('test');
