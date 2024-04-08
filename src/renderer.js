@@ -1,3 +1,5 @@
+const { shell } = require('electron');
+
 
 window.addEventListener('DOMContentLoaded', () => {
     const bBtn = document.querySelector('#btn');
@@ -11,7 +13,27 @@ window.addEventListener('DOMContentLoaded', () => {
     sendbtn.addEventListener('click', () => {
         console.log('btn1');
         window.electronAPI.send2Slave('this from main renderer...');
-    })
+    });
+
+
+    const dialogbtn = document.querySelector('#btn2');
+    dialogbtn.addEventListener('click', () => {
+        console.log('dialogbtn');
+        window.electronAPI.newDialog('new dialog...');
+
+    });
+
+    url = 'https://wangtrust.top'
+
+    const shellbtn = document.querySelector('#btn3');
+    shellbtn.addEventListener('click', () => {
+        console.log('shell');
+        shell.openExternal(url);
+
+    });
+
+
+
 })
 
 window.addEventListener('contextmenu', (ev) => {
@@ -25,3 +47,6 @@ window.electronAPI.getslavedata( (value) => {
     console.log(value);
 
 })
+
+
+

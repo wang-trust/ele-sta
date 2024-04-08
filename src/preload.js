@@ -15,5 +15,9 @@ contextBridge.exposeInMainWorld('electronAPI', {
     send2main: (value) => ipcRenderer.send('renderer::tomain', value),
     getslavedata:(callback) => ipcRenderer.on('renderer::fromslave', (event, value) => {
         callback(value);
-    })
+    }),
+
+    newDialog: (value) => ipcRenderer.send('dialog::new-d', value),
+
+    
 })

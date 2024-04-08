@@ -21,9 +21,9 @@ const createWindow = () => {
         // transparent: true, // 透明设置
         // autoHideMenuBar: true, // 设置窗口的菜单栏
         webPreferences: {
-            preload: path.join(__dirname, 'preload.js'),
-            // nodeIntegration: true,
-            // contextIsolation: false
+            nodeIntegration: true,
+            contextIsolation: false,
+            // preload: path.join(__dirname, 'preload.js'),
         },
     });
 
@@ -122,6 +122,27 @@ const createWindow = () => {
     ipcMain.on('renderer::tomain', (e, data) => {
         console.log(data);
         mainWindow.webContents.send('renderer::fromslave', data);
+    });
+
+
+    // dialog 相关
+    ipcMain.on('dialog::new-d', (e, value) => {
+        console.log('new dialog');
+
+        let newDialog = dialog.showOpenDialog({
+            buttonLabel: 'Please Select',
+            title: 'goupi',
+            properties: ['openFile', 'multiSelections'],
+            filters: [
+                { 'name': '代码文件', extensions: ['js', 'json']},
+                { 'name': '图片文件', extensions: ['jpg', 'png']},
+            ]
+        });
+
+        newDialog.then((ret) => {
+            console.log(ret);
+        });
+
     });
 
 };
