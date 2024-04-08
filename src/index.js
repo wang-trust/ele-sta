@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, Menu } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu, globalShortcut, clipboard } = require('electron');
 const path = require('node:path');
 const { dialog } = require('electron');
 
@@ -21,9 +21,9 @@ const createWindow = () => {
         // transparent: true, // 透明设置
         // autoHideMenuBar: true, // 设置窗口的菜单栏
         webPreferences: {
-            nodeIntegration: true,
-            contextIsolation: false,
-            // preload: path.join(__dirname, 'preload.js'),
+            // nodeIntegration: true,
+            // contextIsolation: false,
+            preload: path.join(__dirname, 'preload.js'),
         },
     });
 
@@ -138,12 +138,15 @@ const createWindow = () => {
                 { 'name': '图片文件', extensions: ['jpg', 'png']},
             ]
         });
-
         newDialog.then((ret) => {
             console.log(ret);
         });
-
     });
+
+    ipcMain.on('clip::writetext', (e, value) => {
+        console.log('clipboard test');
+        clipboard.writeText(value);
+    })
 
 };
 
@@ -161,6 +164,22 @@ app.whenReady().then(() => {
         }
     });
 });
+
+
+// 注册全局快捷键
+app.on('ready', () => {
+    let ret = globalShortcut.register('ctrl + q', () => {
+        console.log('register succeed...');
+    })
+    if(!ret){
+        console.log('register failed...')
+    }
+})
+
+// 取消全局快捷键
+app.on('will-quit', () => {
+    globalShortcut.unregister('ctrl + q');
+})
 
 
 

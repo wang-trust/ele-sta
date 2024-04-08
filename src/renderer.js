@@ -1,4 +1,6 @@
-const { shell } = require('electron');
+// const { shell } = require('electron');
+
+// const { clipboard } = require("electron");
 
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -28,10 +30,30 @@ window.addEventListener('DOMContentLoaded', () => {
     const shellbtn = document.querySelector('#btn3');
     shellbtn.addEventListener('click', () => {
         console.log('shell');
-        shell.openExternal(url);
+        // shell.openExternal(url);
 
     });
+    
 
+    // Notification
+    const notifbtn = document.querySelector('#btn4');
+    notifbtn.addEventListener('click', () => {
+        let notiftemp = {
+            title: 'goupi Notice',
+            body: 'goupi now going',
+            icon: 'favicon.ico'
+        };
+        let mynotif = new window.Notification(notiftemp.title, notiftemp);
+        mynotif.onclick = function() {
+            console.log('mynotif click event run...');
+        };
+    });
+
+    // clipboard
+    const clipbtn = document.querySelector('#btn5');
+    clipbtn.addEventListener('click', () => {
+        window.electronAPI.cliptest('12345');
+    });
 
 
 })

@@ -18,6 +18,17 @@ contextBridge.exposeInMainWorld('electronAPI', {
     }),
 
     newDialog: (value) => ipcRenderer.send('dialog::new-d', value),
+    cliptest: (value) => ipcRenderer.send('clip::writetext', value),
 
-    
 })
+
+/*
+// electron 需要考虑的两个方面
+
+- shell 功能
+- 视频播放功能
+
+
+
+*/
+
