@@ -19,6 +19,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
 
     newDialog: (value) => ipcRenderer.send('dialog::new-d', value),
     cliptest: (value) => ipcRenderer.send('clip::writetext', value),
+    cmdtest: (value) => ipcRenderer.invoke('cmd::runls', value),
 
 })
 

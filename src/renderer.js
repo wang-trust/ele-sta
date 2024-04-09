@@ -54,6 +54,20 @@ window.addEventListener('DOMContentLoaded', () => {
     clipbtn.addEventListener('click', () => {
         window.electronAPI.cliptest('12345');
     });
+    
+    // cmd
+    const cmdbtn = document.querySelector('#btn6');
+    cmdbtn.addEventListener('click', () => {
+        console.log('cmd btn start...');
+        let ret = window.electronAPI.cmdtest('cmdbtn');
+        ret.then((data) => {
+            let utf8decoder = new TextDecoder('gbk');
+            console.log(utf8decoder.decode(data));
+        });
+    });
+
+    
+
 
 
 })

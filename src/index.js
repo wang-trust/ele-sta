@@ -1,6 +1,8 @@
 const { app, BrowserWindow, ipcMain, Menu, globalShortcut, clipboard } = require('electron');
 const path = require('node:path');
 const { dialog } = require('electron');
+const { spawn } = require('node:child_process');
+
 
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -146,8 +148,42 @@ const createWindow = () => {
     ipcMain.on('clip::writetext', (e, value) => {
         console.log('clipboard test');
         clipboard.writeText(value);
-    })
+    });
+    
 
+    ipcMain.handle('cmd::runls', (e, value) => {
+        console.log('cmd test');
+
+        const ls = spawn( 'dir', {
+            encoding: 'utf-8',
+            cwd: process.cwd(),
+            shell: true
+        });
+
+        let p = new Promise((resolve, reject) => {
+            let ret;
+            let d;
+            ls.stdout.on('data', (data) => {
+                d = data;
+                // resolve(d);
+            });
+            
+            ls.stderr.on('data', (data) => {
+                console.log(`stderr: ${data}`);
+                d =  `stderr: ${data}`;
+                // resolve(d);
+            });
+            ls.on('close', (code) => {
+                console.log(`process close: ${code}`);
+                resolve(d);  // 返回完整的处理结果
+            })
+        })
+
+        return p;
+    });
+
+    
+    
 };
 
 // This method will be called when Electron has finished
