@@ -65,8 +65,24 @@ window.addEventListener('DOMContentLoaded', () => {
             console.log(utf8decoder.decode(data));
         });
     });
-
     
+    let vi = document.querySelector('#video1');
+    const videobtn = document.querySelector('#btn7');
+    videobtn.addEventListener('click', () => {
+        console.log('video btn start...');
+        let vipath = './victory.mp4';
+        vi.innerHTML = `<source src="${vipath}">`;
+
+
+    });
+
+    vi.onloadedmetadata = () => {
+        vi.currentTime = 1;
+        const { duration, videoHeight, videoWidth } = vi
+        console.log(`${duration}, ${videoHeight}, ${videoWidth}`);
+
+    }
+
 
 
 

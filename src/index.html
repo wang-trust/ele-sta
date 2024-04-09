@@ -1,22 +1,33 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Hello World!</title>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';">
-    <link rel="stylesheet" href="index.css" />
-  </head>
-  <body>
-    <h1>💖 Hello World!</h1>
-    <button id="btn">Click</button>
-    <button id="btn1">Send</button>
-    <button id="btn2">Dialog</button>
-    <button id="btn3">Shell</button>
-    <button id="btn4">Notice</button>
-    <button id="btn5">clipboard</button>
-    <button id="btn6">cmd</button>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Hello World!</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';">
+  <link rel="stylesheet" href="index.css" />
+</head>
+
+<body>
+  <h1>💖 Hello World!</h1>
+  <button id="btn">Click</button>
+  <button id="btn1">Send</button>
+  <button id="btn2">Dialog</button>
+  <button id="btn3">Shell</button>
+  <button id="btn4">Notice</button>
+  <button id="btn5">clipboard</button>
+  <button id="btn6">cmd</button>
+  <button id="btn7">Video</button>
 
 
-    <script src="renderer.js"></script>
-  </body>
+  <video controls id="video1">
+    <!-- <source src="./victory.mp4"> -->
+    <!-- <source src=""> -->
+    <!-- <embed src="" type="audio/mp3"> 这个用来兼容IE8，勉强能用，需要指定大小 -->
+  </video>
+
+
+  <script src="renderer.js"></script>
+</body>
+
 </html>

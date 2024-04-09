@@ -5,3 +5,8 @@ body {
   max-width: 38rem;
   padding: 2rem;
 }
+
+video{
+  width: 300px;
+  height: 300px;
+}
